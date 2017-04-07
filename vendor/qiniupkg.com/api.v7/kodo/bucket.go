@@ -113,6 +113,17 @@ func (p Bucket) Copy(ctx Context, keySrc, keyDest string) (err error) {
 	return p.Conn.Call(ctx, nil, "POST", p.Conn.RSHost+URICopy(p.Name, keySrc, p.Name, keyDest))
 }
 
+// 复制一个文件到其他容器。
+//
+// ctx     是请求的上下文。
+// keySrc  是要复制的文件的源路径。
+// bucketDest 是文件的目标空间。
+// keyDest 是要复制的文件的目标路径。
+//
+func (p Bucket) CopyEx(ctx Context, keySrc, bucketDest, keyDest string) (err error) {
+	return p.Conn.Call(ctx, nil, "POST", p.Conn.RSHost+URICopy(p.Name, keySrc, bucketDest, keyDest))
+}
+
 // 修改文件的MIME类型。
 //
 // ctx  是请求的上下文。

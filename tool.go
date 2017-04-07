@@ -106,6 +106,7 @@ func main() {
 			emptyCmd{}.createCmd(),
 			(&export{}).createCmd(),
 			importCmd{}.createCmd(),
+			backCmd{}.createCmd(),
 		},
 	}
 	go regSigin()

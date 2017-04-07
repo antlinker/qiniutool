@@ -127,15 +127,28 @@ func (e *export) download(url, path, key string) int {
 	}
 	fstat, err := os.Stat(filename)
 	if err != nil {
+		switch err {
+		case os.ErrPermission:
+			log.Printf("无权先操作文件%s:%v", filename, err)
+			return -1
+		case os.ErrInvalid:
+			log.Printf("文件无效%s:%v", filename, err)
+			return -1
+		case os.ErrNotExist:
+		default:
+
+		}
+
+	} else {
+		if same(stat, fstat) {
+			return 1
+		}
 		err1 := os.Remove(filename)
 		if err1 != nil {
 			log.Printf("删除文件%s失败", filename)
 			return -1
 		}
-	} else {
-		if same(stat, fstat) {
-			return 1
-		}
+
 	}
 
 	dir := filepath.Dir(filename)

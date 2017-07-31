@@ -103,6 +103,9 @@ func (e *export) createFlag() []cli.Flag {
 }
 func (e *export) exportURL(url string, file *os.File) error {
 	res, err := http.Get(url)
+	if err != nil {
+		return err
+	}
 	defer res.Body.Close()
 	if err != nil {
 		return err
